@@ -1,0 +1,71 @@
+<!-- <div class="container"> -->
+<div class="col-xs-12 col-sm-10 col-md-8">    
+  <div class="card">
+    <div class="card-header">
+      <h2>User Signup</h2>
+    </div>
+    <div class="card-body">
+      <!-- <h1>User Signup</h1> -->
+      <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="userName">User Name</label>
+          <input type="text" class="form-control" id="userName"
+            formControlName="userName">       
+          <div class="alert alert-danger" *ngIf="registrationForm.get('userName').invalid 
+            && registrationForm.get('userName').touched">
+            <div *ngIf="registrationForm.get('userName').errors.required">
+              User name is required
+            </div>
+            <div *ngIf="registrationForm.get('userName').errors.minlength">
+              User name must be at least 5 characters long
+            </div>
+            <div *ngIf="registrationForm.get('userName').errors.maxlength">
+              User name should not be more than 20 characters long
+            </div>
+          </div>                      
+        </div>
+        <div class="form-group">
+          <label for="email">email</label>
+          <input type="email" class="form-control" id="email"
+          formControlName="email">  
+          <div class="alert alert-danger" *ngIf="registrationForm.get('email').invalid 
+              && registrationForm.get('email').touched">
+            Please enter a valid email
+          </div>                      
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password"
+          formControlName="password"> 
+          <div class="alert alert-danger" *ngIf="registrationForm.get('password').invalid 
+            && registrationForm.get('password').touched">
+            <div *ngIf="registrationForm.get('password').errors.required">
+              Password is required
+            </div>
+            <div *ngIf="registrationForm.get('password').errors.minlength">
+              Password must be at least 8 characters long
+            </div>
+          </div>                       
+        </div>
+        <div class="form-group">
+          <label>User Roles</label>
+            <div class="form-check" 
+            *ngFor="let role of registrationForm.get('roleSelection')['controls']; let i = index">
+              <label class="form-check-label">
+                  <input type="checkbox" class="form-check-input"
+                  [formControl]="role">
+                  {{roles[i].name}}
+              </label>
+            </div>
+        </div>
+        <button type="submit" [disabled]="registrationForm.invalid" class="btn btn-success">Sign Up</button>
+        <div class="alert alert-warning" *ngIf="submitted && !isRegistered">
+          Signup failed- {{ errorMessage }}
+        </div>
+      </form> 
+      <div class="alert alert-success" *ngIf="isRegistered">
+        Your registration is successful!
+      </div>
+    </div>
+  </div>
+</div>
